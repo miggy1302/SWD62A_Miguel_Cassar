@@ -17,7 +17,7 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('college.index');
+    return redirect()->route('colleges.index');
 });
 
 //-----------COLLEGES ROUTES---------------
@@ -40,7 +40,7 @@ Route::put('/colleges/{id}', [CollegeController::class, 'update'])->name('colleg
 //-----------STUDENTS ROUTES---------------
 
 // route that will return a list of students
-Route::get('/students', [StudentController::class, 'index'])->name('colleges.index');
+Route::get('/students', [StudentController::class, 'index'])->name('students.index');
 
 // route that will allow a user to create a students
 Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');

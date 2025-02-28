@@ -25,7 +25,7 @@ class StudentController extends Controller
     
         $student = new student();
         $colleges = College::orderby('name')->pluck('name', 'id')->prepend('All Colleges', '');
-        return view('students.create', compact('Colleges', 'student'));
+        return view('students.create', compact('colleges', 'student'));
     }
 
     //store the form data

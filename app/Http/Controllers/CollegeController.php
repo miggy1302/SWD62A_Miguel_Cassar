@@ -18,8 +18,8 @@ class CollegeController extends Controller
     //create new college
     public function create(){
     
-        $collage = new collage();
-        return view('collages.create', compact('collage'));
+        $college = new college();
+        return view('colleges.create', compact('college'));
     }
 
     //store the form data
@@ -29,9 +29,9 @@ class CollegeController extends Controller
             'address' => 'required'
         ]);
 
-        Collage::create($request->all());
+        college::create($request->all());
 
-        return redirect()->route('collages.index')->with('message', 'collage has been added successfully');
+        return redirect()->route('colleges.index')->with('message', 'college has been added successfully');
     }
     
 }

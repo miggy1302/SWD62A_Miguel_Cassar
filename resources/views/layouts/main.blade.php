@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{csrf_token()}}">
 
-    <title>Students</title>
+    <title>Student Management System</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
     <!-- Bootstrap -->
@@ -98,10 +98,10 @@
         <div class="collapse navbar-collapse" id="navbar-toggler">
           <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="{{ route('colleges.index') }}" class="nav-link {{ Request::routeIs('colleges.index') ? 'active' : '' }}">Roles</a>
+                <a href="{{ route('colleges.index') }}" class="nav-link {{ Request::routeIs('colleges.index') ? 'active' : '' }}">Colleges</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('students.index') }}" class="nav-link {{ Request::routeIs('students.index') ? 'active' : '' }}">Weapons</a>
+                <a href="{{ route('students.index') }}" class="nav-link {{ Request::routeIs('students.index') ? 'active' : '' }}">Students</a>
             </li>
         </ul>
         
