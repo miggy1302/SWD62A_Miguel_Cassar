@@ -15,6 +15,7 @@
           </div>
         </div>
       </div>
+      @include('students._filter')
       <table class="table table-striped table-hover">
         <thead>
           <tr>
@@ -28,6 +29,9 @@
           </tr>
         </thead>
         <tbody>
+          @if($message = session('message'))
+            <div class="alert alert-success">{{$message}}</div>
+          @endif
           @if($students->count()>0)
             @foreach($students as $index => $student)
               <tr>
@@ -36,17 +40,26 @@
                 <td>{{$student->email}}</td>
                 <td>{{$student->phone}}</td>
                 <td>{{$student->dob}}</td>
-                <td>{{$student->collage->name}}</td>
+                <td>{{$student->college->name}}</td>
                 <td width="150">
                   <a href="{{route('students.edit', $student->id)}}" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
-                  <a href="#" class="btn-delete" data-href="{{ route('students.destroy', $student->id) }}"><i class="material-icons" style="color: red;" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                </td>
-            @endforeach
-            
-            <form id="form-delete" method="POST" style="display: none">
-              @method('DELETE')
-              @csrf
-            </form>
+                  <a href="javascript:void(0);" class="btn-delete" 
+                    onclick="event.preventDefault(); 
+                              if(confirm('Are you sure you want to delete this student?')) { 
+                                  document.getElementById('form-delete-{{$student->id}}').submit(); 
+                              }">
+                      <i class="material-icons" style="color: red;" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                  </a>
+
+                  <!-- Hidden delete form -->
+                  <form id="form-delete-{{$student->id}}" action="{{ route('students.destroy', $student->id) }}" method="POST" style="display: none;">
+                      @method('DELETE')
+                      @csrf
+                  </form>
+
+            </td>
+        </tr>
+        @endforeach
           @endif
         </tbody>
       </table>
@@ -54,29 +67,5 @@
     </div>
   </div>
     </main>
-
-
-<!-- Delete Modal HTML -->
-<div id="deletestudentModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="delete-student">
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Model</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 
 @endsection

@@ -13,9 +13,9 @@ class StudentController extends Controller
         $colleges = College::orderby('name')->pluck('name', 'id')->prepend('All Colleges', '');
 
         if(request('college_id')== null){
-            $students = Student::all();    
+            $students = Student::orderBy('name')->get();     
         }else{
-            $students = Student::where('college_id', request('college_id'))->get();
+            $students = Student::where('college_id', request('college_id'))->orderBy('name')->get();
         }
         return view('students.index', compact('students', 'colleges'));
     }
@@ -30,12 +30,16 @@ class StudentController extends Controller
 
     //store the form data
     public function store(Request $request){
+        // Log request data to check if dob is included
+        \Log::info($request->all());
         $request -> validate([
             'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'dob' => 'required',
+            'email' => 'required|email|unique:students,email',
+            'phone' => 'required|digits:8|unique:students,phone',
+            'dob' => 'required|date|before:today',
             'college_id'=> 'required|exists:colleges,id',
+        ],[
+            'dob.before' => 'The date of birth must be in the past.',
         ]);
 
         Student::create($request->all());
@@ -47,16 +51,16 @@ class StudentController extends Controller
     public function edit($id){
         $student = Student::find($id);
         $colleges = College::orderBy('name')->pluck('name', 'id')->prepend('All Colleges', '');
-        return view('students.edit', compact('Colleges', 'student'));
+        return view('students.edit', compact('colleges', 'student'));
     }
     
     // Update the user details from the edit form
     public function update($id, Request $request){
         $request -> validate([
             'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'dob' => 'required',
+            'email' => 'required|email|unique:students,email,' . $id, // Ignore the current student's email
+            'phone' => 'required|digits:8|unique:students,phone,' . $id, //// Ignore the current student's phone
+            'dob' => 'required|date|before:today',
             'college_id'=> 'required|exists:colleges,id',
         ]);
 
