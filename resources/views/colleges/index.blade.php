@@ -25,6 +25,9 @@
           </tr>
         </thead>
         <tbody>
+          @if($message = session('message'))
+            <div class="alert alert-success">{{$message}}</div>
+          @endif
           @if($colleges->count()>0)
             @foreach($colleges as $index => $college)
               <tr>
@@ -32,7 +35,7 @@
                 <td>{{$college->name}}</td>
                 <td>{{$college->address}}</td>
                 <td width="150">
-                  <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" style="color: red;" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                  <a href="{{route('colleges.edit', $college->id)}}" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
                 </td>
             @endforeach
             
@@ -47,29 +50,5 @@
     </div>
   </div>
     </main>
-
-
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="delete-role">
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Model</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-          <input type="submit" class="btn btn-danger" value="Delete">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 
 @endsection
