@@ -26,7 +26,13 @@
         </thead>
         <tbody>
           @if($message = session('message'))
-            <div class="alert alert-success">{{$message}}</div>
+          <div class="alert alert-success" id="success-alert">{{ $message }}</div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                setTimeout(function() {
+                    $("#success-alert").fadeOut("slow");
+                }, 2000);
+            </script>
           @endif
           @if($colleges->count()>0)
             @foreach($colleges as $index => $college)
@@ -36,13 +42,23 @@
                 <td>{{$college->address}}</td>
                 <td width="150">
                   <a href="{{route('colleges.edit', $college->id)}}" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
+                  <a href="javascript:void(0);" class="btn-delete" 
+                    onclick="event.preventDefault(); 
+                              if(confirm('Are you sure you want to delete this college?')) { 
+                                  document.getElementById('form-delete-{{$college->id}}').submit(); 
+                              }">
+                      <i class="material-icons" style="color: red;" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                  </a>
+
+                  <!-- Hidden delete form -->
+                  <form id="form-delete-{{$college->id}}" action="{{ route('colleges.destroy', $college->id) }}" method="POST" style="display: none;">
+                      @method('DELETE')
+                      @csrf
+                  </form>
+                
                 </td>
-            @endforeach
-            
-            <form id="form-delete" method="POST" style="display: none">
-              @method('DELETE')
-              @csrf
-            </form>
+              </tr>
+          @endforeach
           @endif
         </tbody>
       </table>

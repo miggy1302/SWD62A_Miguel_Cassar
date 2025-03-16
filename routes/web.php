@@ -37,6 +37,9 @@ Route::get('/colleges/{id}/edit', [CollegeController::class, 'edit'])->name('col
 //route that will process the updated values of the College
 Route::put('/colleges/{id}', [CollegeController::class, 'update'])->name('colleges.update');
 
+// Route that will delete a specific college
+Route::delete('/colleges/{id}', [CollegeController::class, 'destroy'])->name('colleges.destroy');
+
 //-----------STUDENTS ROUTES---------------
 
 // route that will return a list of students

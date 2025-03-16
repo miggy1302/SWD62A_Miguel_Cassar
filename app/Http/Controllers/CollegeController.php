@@ -46,7 +46,7 @@ class CollegeController extends Controller
     // Update the user details from the edit form
     public function update($id, Request $request){
         $request -> validate([
-            'name' => 'required|unique:colleges,name',
+            'name' => 'required|unique:colleges,name,'.$id,
             'address' => 'required'
         ]);
 
@@ -54,6 +54,13 @@ class CollegeController extends Controller
         $college->update($request->all());
 
         return redirect()->route('colleges.index')->with('message', 'College has been updated successfully!');
+    }
+
+    // Destroy the college with the id
+    public function destroy($id){
+        $college = College::find($id);
+        $college->delete();
+        return back()->with('message', 'College has been deleted successfully');
     }
     
 }

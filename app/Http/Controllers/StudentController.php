@@ -70,7 +70,7 @@ class StudentController extends Controller
         return redirect()->route('students.index')->with('message', 'Student has been updated successfully!');
     }
 
-    // Destroy the contact with the id
+    // Destroy the student with the id
     public function destroy($id){
         $student = Student::find($id);
         $student->delete();

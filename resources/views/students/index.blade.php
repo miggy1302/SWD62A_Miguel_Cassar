@@ -30,7 +30,13 @@
         </thead>
         <tbody>
           @if($message = session('message'))
-            <div class="alert alert-success">{{$message}}</div>
+            <div class="alert alert-success" id="success-alert">{{ $message }}</div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                setTimeout(function() {
+                    $("#success-alert").fadeOut("slow");
+                }, 2000);
+            </script>
           @endif
           @if($students->count()>0)
             @foreach($students as $index => $student)
